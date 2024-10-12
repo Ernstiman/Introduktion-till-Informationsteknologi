@@ -9,9 +9,10 @@ class User():
     self.items = []
 
   def importItems(self, file):
-    items = file.readline()
-    items = items.split()
+    items = file.readlines()
+    print(items)
     for item in items:
+      item = item.replace("\n","")
       if item not in self.items:
         self.items.append(item)
 
@@ -90,13 +91,13 @@ def menu(user):
     pass
 
 def saveLogin(file, user):
-  login_text = f'{user.username} {user.password}'
+  login_text = f'{user.username}\n{user.password}'
   file.write(login_text)
   file.close()
   pass
 
 def quit(login_file, items_file,user):
-  item_text = " " + " ".join(user.items)
+  item_text = "\n".join(user.items) + "\n"
   items_file.write(item_text)
   items_file.close()
 
@@ -115,37 +116,49 @@ def fileOpener(user):
 def listItems(user):
   index = 1
   print("")
-  for item in user.items:
-    print(f'{index}. {item}')
-    index += 1
+  if len(user.items) == 0:
+    print("You have no items!")
+  else:
+    for item in user.items:
+      print(f'{index}. {item}')
+      index += 1
 
 def lookThroughFiles(users):
   for files in os.listdir(os.getcwd() + "/logins"):
       my_files = open(os.getcwd() + "/logins/" + files, "r")
-      files = my_files.readline()
-      files = files.split()
+      files = my_files.readlines()
       print(files)
-      users.append(User(files[0], files[1]))
+      users.append(User(files[0].replace("\n", ""), files[1]))
       my_files.close()
+
+def checkForUsername(users, username):
+  for user in users: 
+    if username == user.username:
+      return False
+  return True
 
 def createAccount(users):
   username = input("Enter your username: ")
   password = input("Enter your password: ")
 
   while True:
-    val = input(f'Are you sure you want the username: {username} and the password: {password}(y/n)? ')
+    val = input(f'Are you sure you want the username: {username} and the password: {password} (y/n)? ')
     if val == "y":
-      new_user = User(username, password)
-      users.append(new_user)
-      loginFile,_ = checkForFile(new_user)
-      saveLogin(loginFile, new_user)
-      break
+      if checkForUsername(users, username):
+        new_user = User(username, password)
+        users.append(new_user)
+        loginFile,_ = checkForFile(new_user)
+        saveLogin(loginFile, new_user)
+        break
+      else: 
+        print("Det här användarnamnet finns redan!")
+        createAccount(users)
+        break
     elif val == "n":
       createAccount(users)
       break
     else: 
       checkIput()
-
 
 def main():
   users = []
