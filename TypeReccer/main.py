@@ -4,8 +4,14 @@ import random
 import time
 
 #text = "Hej där mitt namn är Viktor Forslund"
+os.system('cls')
 index = 0 
 startTime = time.time()
+
+reset = '\033[0m'
+green = '\033[32m'
+red = '\033[31m'
+underline = '\033[4m' #length: 4
 
 
 def generateText():
@@ -30,10 +36,23 @@ def calculateWPM():
   wpm = (index / (elapsed_time / 6)) // 5
   print(f"WPM: {wpm}")
 
+def underliner(text, index):
+  if index < len(text):
+    letter = text[index]
+    new_letter = f'{underline}{letter}{reset}'
+    text = text[:index] + new_letter + text[index + 1:]
+    index += 4
+  return text, index
+
+def removeUnderline(text, index):
+  if index < len(text):
+    letter = text[index]
+    text = text[:index-4] + letter + text[index + 5:]
+    index -= 4
+  return text, index
+
 def checkLetter(index, text, input_letter, current_letter = ""):
-  reset = '\033[0m'
-  green = '\033[32m'
-  red = '\033[31m'
+  text, index = removeUnderline(text, index)
   if input_letter == "space":
     input_letter = " "
   if input_letter == "backspace":
@@ -69,10 +88,12 @@ def checkIndex(text, index):
   return letter
 
 text = generateText()
+text, index = underliner(text, index)
 print(text)
 counter = 0
 while True:
     current_letter = checkIndex(text, index)
+    
     input_letter = keyboard.read_event()
     if(input_letter.event_type == keyboard.KEY_DOWN):
       input_letter = input_letter.name
@@ -83,6 +104,7 @@ while True:
         index, text, red = checkLetter(index, text, input_letter, current_letter)
         os.system('cls')
         counter += 1
+        text, index = underliner(text, index)
         print(text)
     if index >= len(text) and text.count(red) == 0:
       break
