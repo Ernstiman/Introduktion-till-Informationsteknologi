@@ -7,23 +7,12 @@ import time
 index = 0 
 startTime = time.time()
 
-
 def generateText():
   with open("texts.txt", 'r') as textFile:
     lines = textFile.readlines()
     randNum = random.randint(0, 9)
     text = lines[0].strip()  
     return text
-
-def timeStart():
-  startTime 
-  return startTime 
-    
-def timeStop():
-  endTime = time.time() - startTime
-  print(startTime)
-  print(f"Elapsed time: {startTime:.2f} seconds")
-  return (time.time() - startTime)
 
 def calculateWPM():
   wordCount = text.count(" ") + 1
