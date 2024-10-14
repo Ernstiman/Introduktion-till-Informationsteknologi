@@ -12,7 +12,7 @@ def generateText():
   with open("texts.txt", 'r') as textFile:
     lines = textFile.readlines()
     randNum = random.randint(0, 9)
-    text = lines[randNum].strip()  
+    text = lines[0].strip()  
     return text
 
 def timeStart():
@@ -27,14 +27,8 @@ def timeStop():
 
 def calculateWPM():
   wordCount = text.count(" ") + 1
-  print(elapsed_time)
-  wpm = wordCount // elapsed_time
-  print(f"WordCount: {wordCount}")
-  print(f"elapsed_time {elapsed_time}")
+  wpm = (index / (elapsed_time / 6)) // 5
   print(f"WPM: {wpm}")
-  print(wordCount)
-  
-
 
 def checkLetter(index, text, input_letter, current_letter):
   reset = '\033[0m'
@@ -49,18 +43,21 @@ def checkLetter(index, text, input_letter, current_letter):
   return index, text
 
 text = generateText()
-start_time = time.time()
+print(text)
+counter = 0
 while True:
   current_letter = text[index]
   input_letter = keyboard.read_event()
   if(input_letter.event_type == keyboard.KEY_DOWN):
+    if counter == 0:
+        start_time = time.time()
     input_letter = input_letter.name
     index, text = checkLetter(index, text, input_letter, current_letter)
     os.system('cls')
+    counter += 1
     print(text)
   if index >= len(text):
     break
 
-elapsed_time = (time.time() - start_time) // 60
-# endTime = timeStop()
+elapsed_time = (time.time() - start_time) 
 calculateWPM()
