@@ -4,6 +4,7 @@ import random
 import time
 
 print("hello world")
+print("strog life matters")
 #text = "Hej där mitt namn är Viktor Forslund"
 os.system('cls')
 index = 0 
