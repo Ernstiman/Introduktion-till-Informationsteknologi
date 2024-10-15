@@ -3,6 +3,7 @@ import os
 import random
 import time
 
+print("hello world")
 #text = "Hej där mitt namn är Viktor Forslund"
 os.system('cls')
 index = 0 
