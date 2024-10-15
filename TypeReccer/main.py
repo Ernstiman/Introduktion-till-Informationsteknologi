@@ -8,15 +8,14 @@ os.system('cls')
 index = 0 
 startTime = time.time()
 
-<<<<<<< HEAD
-=======
+
 reset = '\033[0m'
 green = '\033[32m'
 red = '\033[31m'
 underline = '\033[4m' #length: 4
 
 
->>>>>>> 6959de085575149cb5735e4fcdbc221589d21771
+
 def generateText():
   with open("texts.txt", 'r') as textFile:
     lines = textFile.readlines()
@@ -94,13 +93,18 @@ while True:
             start_time = time.time()
         
         index, text, red = checkLetter(index, text, input_letter, current_letter)
-        if input_letter == "space":
+        if text.count(red) > 0:
+            current_word = red + current_word
+        if text.count(red) == 0 and current_word.count(red) > 0:
+          current_word = current_word[(current_word.count(red) * 5) + 1:]
+        if input_letter == "space" and text.count(red) == 0:
           current_word = ""
-        elif input_letter == "backspace":
-          pass
+        if input_letter == "backspace":
+          current_word = current_word[:len(current_word) - 1]
         else:
-          current_word += input_letter
-
+          if input_letter == "space":
+            current_word += " "
+          else: current_word += input_letter
         os.system('cls')
         counter += 1
         text, index = underliner(text, index)
