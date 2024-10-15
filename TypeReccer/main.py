@@ -5,6 +5,7 @@ import time
 
 print("hello world")
 print("strog life matters")
+print("strog-off-off")
 #text = "Hej där mitt namn är Viktor Forslund"
 os.system('cls')
 index = 0 
