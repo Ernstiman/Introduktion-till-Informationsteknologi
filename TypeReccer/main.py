@@ -110,7 +110,7 @@ while True:
         counter += 1
         text, index = underliner(text, index)
         print(text)
-        print("\n\n\n" + current_word)
+        print("\n\n\n" + "--> " + current_word)
     if index >= len(text) and text.count(red) == 0:
       break
 
