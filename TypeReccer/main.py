@@ -97,7 +97,7 @@ while True:
         if text.count(red) > 0:
             current_word = red + current_word
         if text.count(red) == 0 and current_word.count(red) > 0:
-          current_word = current_word[(current_word.count(red) * 5) + 1:]
+          current_word = current_word[(current_word.count(red) * 5):]
         if input_letter == "space" and text.count(red) == 0:
           current_word = ""
         if input_letter == "backspace":
