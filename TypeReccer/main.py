@@ -61,8 +61,6 @@ def checkLetter(index, text, input_letter, current_letter = ""):
     else: 
       text = deleteColor(text[index - 5], text, index)
       index -= 10
-      
-
   elif current_letter == input_letter and text.count(red) == 0 and current_letter != "":
     text, new_letter = changeColor(green, reset,input_letter, text, index)
     index += len(new_letter)
@@ -89,6 +87,7 @@ def checkIndex(text, index):
 
 text = generateText()
 text, index = underliner(text, index)
+current_word = ""
 print(text)
 counter = 0
 while True:
@@ -102,10 +101,18 @@ while True:
             start_time = time.time()
         
         index, text, red = checkLetter(index, text, input_letter, current_letter)
+        if input_letter == "space":
+          current_word = ""
+        elif input_letter == "backspace":
+          pass
+        else:
+          current_word += input_letter
+
         os.system('cls')
         counter += 1
         text, index = underliner(text, index)
         print(text)
+        print("\n\n\n" + current_word)
     if index >= len(text) and text.count(red) == 0:
       break
 
