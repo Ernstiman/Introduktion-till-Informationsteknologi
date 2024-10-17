@@ -145,13 +145,14 @@ print("\n",text)
 print("\nYou: ")
 print(f"{blue}-->{reset} {current_word}")
 print(f"{blue}-->{reset} 0 WPM \n")
-print("\Monkey: ")
+print("Monkey: ")
 print(f"{blue}-->{reset}")
 print(f"{blue}-->{reset} 0 WPM \n")
 
 while True:
   current_letter = checkIndex(text, index)
   input_letter = keyboard.read_event()
+
   if(input_letter.event_type == keyboard.KEY_DOWN):
 
     input_letter = input_letter.name
@@ -160,11 +161,11 @@ while True:
 
     if input_letter == "esc":
       monkey_counter = len(monkey_text)
-
+      break
+      
     if counter == 0:
       start_time = time.time()
     
-
     if input_letter != "skift":
       index, text, red = checkLetter(index, text, input_letter, current_letter)
       if text.count(red) > 0:
@@ -188,8 +189,13 @@ while True:
       print_progress_bar(monkey_counter, len(monkey_text))
       counter += 1
       text, index = underliner(text, index)
-  elapsed_time = (time.time() - start_time) 
 
+
+  elapsed_time = (time.time() - start_time)
   if index >= len(text) and text.count(red) == 0:
     break
 
+  
+
+print(reset)
+print("done")
