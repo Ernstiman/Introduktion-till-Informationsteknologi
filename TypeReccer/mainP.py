@@ -19,7 +19,7 @@ counter = 0
 
 monkey_lock = threading.Lock()
 monkey_counter = 0
-monkey_skill = random.randint(5, 15)
+monkey_skill = random.randint(10, 20)
 monkey_wpm = 0
 
 def monkey():
@@ -28,12 +28,12 @@ def monkey():
     monkey_start_time = time.time()
 
     while monkey_counter != len(monkey_text) + 1:
-      time.sleep(0.0001)
+      time.sleep(0.005)
       randMonkeyNum = random.randint(0, monkey_skill)
       if randMonkeyNum == 1:
         monkey_counter += 1
       
-      print_progress_bar(monkey_counter, len(monkey_text))
+    return True
 
   # if monkey_elapsed_time > 0:
   #   monkey_elapsed_time = (time.time() - monkey_start_time)
@@ -51,7 +51,7 @@ def print_progress_bar(current, total, bar_length=50):
 
   # Construct and print the progress bar with current progress info
   #print("-------------------- MONKEY ----------------------")
-  print(f"\r[{green_bar}{red_bar}{reset_color}] {monkey_wpm} WPM", end="", flush=True)
+  print(f"\r[{green_bar}{red_bar}{reset_color}] {monkey_wpm} MONKEY WPM")
 
 def generateText():
   with open("texts.txt", 'r') as textFile:
@@ -64,7 +64,7 @@ def generateText():
 
 def calculateWPM():
   wpm = (index / (elapsed_time / 6)) // 5
-  print(f"{blue}-->{reset} {wpm} WPM")
+  print(f"{blue}-->{reset} {wpm} WPM \n")
 
 def underliner(text, index):
   if index < len(text):
@@ -127,12 +127,24 @@ def raceAgain():
     else:
       print("Enter valid input")
 
+def splash():
+    splash_length = 40
+    row_1 = "MonkeyWrite"
+    row_2 = "Can you type faster than a monkey?"
+    row_1_space = int((splash_length - len(row_1)) / 2)
+    row_2_space = int((splash_length - len(row_2)) / 2)
+    print("\n" + "~" * splash_length + "\n" + " " * row_1_space + row_1 +"\n" + " " * row_2_space + row_2 + "\n" + "~" * splash_length)
+
 
 text = generateText()
 monkey_text = text
 text, index = underliner(text, index)
 current_word = ""
-print(text)
+
+
+splash()
+input("Press Enter to Start: ")
+print("\n",text)
 
 while True:
   current_letter = checkIndex(text, index)
@@ -166,7 +178,10 @@ while True:
 
         print(text)
         print(f"\n{blue}-->{reset} {current_word}")
-        calculateWPM()
+        calculateWPM()  
+        print_progress_bar(monkey_counter, len(monkey_text))
+       
+        
         #print_progress_bar(index, len(text), bar_length=50)
       
 
