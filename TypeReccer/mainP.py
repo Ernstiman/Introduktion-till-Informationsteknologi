@@ -57,11 +57,14 @@ def generateText():
 
 
 def calculateWPM():
-  if elapsed_time > 0:
-    wpm = (index / (elapsed_time / 6)) // 5
-    print(f"{blue}-->{reset} {wpm} WPM \n")
-  else:
-    print(f"{blue}-->{reset} 0 WPM \n") 
+  try:
+    if elapsed_time > 0:
+      wpm = (index / (elapsed_time / 6)) // 5
+      print(f"{blue}-->{reset} {wpm} WPM \n")
+    else:
+      print(f"{blue}-->{reset} 0 WPM \n")
+  except: 
+    pass 
 
 def underliner(text, index):
   if index < len(text):
@@ -83,11 +86,13 @@ def checkLetter(index, text, input_letter, current_letter = ""):
   if input_letter == "space":
     input_letter = " "
   if input_letter == "backspace":
-    if text[index - 5] == " " and text.count(red) == 0:
-      pass
-    else: 
-      text = deleteColor(text[index - 5], text, index)
-      index -= 10
+    if index >= 5:
+      if text[index - 5] == " " and text.count(red) == 0:
+        pass
+      else: 
+        text = deleteColor(text[index - 5], text, index)
+        index -= 10
+        if index < 0: index = 0
 
   elif current_letter == input_letter and text.count(red) == 0 and current_letter != "":
     text, new_letter = changeColor(green, reset,input_letter, text, index)
@@ -174,7 +179,7 @@ while True:
         current_word = current_word[(current_word.count(red) * 5):]
       if input_letter == "space" and text.count(red) == 0:
         current_word = ""
-      if input_letter == "backspace" and index != 0:
+      if input_letter == "backspace":
         current_word = current_word[:len(current_word) - 1]
       else:
         if input_letter == "space":
