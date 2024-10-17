@@ -4,10 +4,6 @@ import random
 import time
 import threading
 
-#text = "Hej där mitt namn är Viktor Forslund"
-
-
-
 reset = '\033[0m'
 green = '\033[32m'
 red = '\033[31m'
@@ -127,9 +123,9 @@ def raceAgain():
   while True:
     ask = input("Do you want to race again? \n r) Race Again \n q) Quit\n")
     print(ask)
-    if ask == 'r':
+    if ask[len(ask) - 1] == 'r':
       return True
-    elif ask == 'q':
+    elif ask[len(ask) - 1] == 'q':
       return False
     else:
       print("Enter valid input")
@@ -143,6 +139,7 @@ def splash():
     print("\n" + "~" * splash_length + "\n" + " " * row_1_space + row_1 +"\n" + " " * row_2_space + row_2 + "\n" + "~" * splash_length)
 
 def updateCurrentWord(text, index, current_word, input_letter):
+    letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y","z", "å", "ä","ö", ",", "-", ":", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
     if text.count(red) > 0:
         current_word = red + current_word
     if text.count(red) == 0 and current_word.count(red) > 0:
@@ -151,7 +148,7 @@ def updateCurrentWord(text, index, current_word, input_letter):
       current_word = ""
     if input_letter == "backspace":
       current_word = current_word[:len(current_word) - 1]
-    elif index != len(text):
+    elif index != len(text) and input_letter.lower() in letters:
       if input_letter == "space":
         current_word += " "
       else: current_word += input_letter
@@ -163,6 +160,7 @@ def resetMonkeyCount():
 
 def main():
   os.system('cls')
+  
   global monkey_counter
   counter = 0
   index = 0 
