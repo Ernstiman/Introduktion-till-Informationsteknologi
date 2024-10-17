@@ -20,39 +20,33 @@ counter = 0
 
 monkey_lock = threading.Lock()
 monkey_counter = 0
-monkey_skill = random.randint(10, 20)
+monkey_skill = random.randint(15, 28)
 monkey_wpm = 0
 
 def monkey():
   global monkey_counter
   with monkey_lock:
-    monkey_start_time = time.time()
-
     while monkey_counter != len(monkey_text) + 1:
       time.sleep(0.005)
-      randMonkeyNum = random.randint(0, monkey_skill)
+      randMonkeyNum = random.randint(1, monkey_skill)
       if randMonkeyNum == 1:
         monkey_counter += 1
       
-    return True
-
-  # if monkey_elapsed_time > 0:
-  #   monkey_elapsed_time = (time.time() - monkey_start_time)
-  #   monkey_wpm = (monkey_counter / (monkey_elapsed_time / 6)) // 5
-  
 
 def print_progress_bar(current, total, bar_length=50):
+  final_monkey_wpm = 0
   progress = current / total
   green_squares = int(progress * bar_length)
   red_squares = bar_length - green_squares
+  green_bar = '\033[32m' + "■" * green_squares  
+  red_bar = '\033[31m' + "■" * red_squares 
+  monkey_elapsed_time = (time.time() - start_time)
 
-  green_bar = '\033[32m' + "■" * green_squares  # Green squares (progress)
-  red_bar = '\033[31m' + "■" * red_squares  # Red squares (remaining)
-  reset_color = "\033[0m"  # Reset color to default
-
-  # Construct and print the progress bar with current progress info
-  #print("-------------------- MONKEY ----------------------")
-  print(f"\r[{green_bar}{red_bar}{reset_color}] {monkey_wpm} MONKEY WPM")
+  monkey_wpm = ((monkey_counter * 10) / (monkey_elapsed_time / 6)) // 5
+  print("Monkey:")
+  print(f"\r{blue} --> | {reset} {green_bar}{red_bar}{reset} |")
+  print(f"{blue}-->{reset} {monkey_wpm} WPM \n")
+  
 
 def generateText():
   with open("texts.txt", 'r') as textFile:
@@ -64,8 +58,11 @@ def generateText():
 
 
 def calculateWPM():
-  wpm = (index / (elapsed_time / 6)) // 5
-  print(f"{blue}-->{reset} {wpm} WPM \n")
+  if elapsed_time > 0:
+    wpm = (index / (elapsed_time / 6)) // 5
+    print(f"{blue}-->{reset} {wpm} WPM \n")
+  else:
+    print(f"{blue}-->{reset} 0 WPM \n") 
 
 def underliner(text, index):
   if index < len(text):
@@ -144,8 +141,14 @@ current_word = ""
 
 
 splash()
-input("Press Enter to Start: ")
+input(f"Press{green} Enter{reset} to Start: ")
 print("\n",text)
+print("\nYou: ")
+print(f"{blue}-->{reset} {current_word}")
+print(f"{blue}-->{reset} 0 WPM \n")
+print("\Monkey: ")
+print(f"{blue}-->{reset}")
+print(f"{blue}-->{reset} 0 WPM \n")
 
 while True:
   current_letter = checkIndex(text, index)
@@ -155,9 +158,13 @@ while True:
     input_letter = input_letter.name
     monkey_thread = threading.Thread(target=monkey)  ##################
     monkey_thread.start()
+
+    if input_letter == "esc":
+      monkey_counter = len(monkey_text)
+
     if counter == 0:
       start_time = time.time()
-
+    
 
     if input_letter != "skift":
       index, text, red = checkLetter(index, text, input_letter, current_letter)
@@ -174,18 +181,12 @@ while True:
           current_word += " "
         else: current_word += input_letter
 
-      if elapsed_time != 0:
-        os.system('cls')
-
-        print(text)
-        print(f"\n{blue}-->{reset} {current_word}")
-        calculateWPM()  
-        print_progress_bar(monkey_counter, len(monkey_text))
-       
-        
-        #print_progress_bar(index, len(text), bar_length=50)
-      
-
+      os.system('cls')
+      print(text)
+      print("\nYou: ")
+      print(f"{blue}-->{reset} {current_word}")
+      calculateWPM()  
+      print_progress_bar(monkey_counter, len(monkey_text))
       counter += 1
       text, index = underliner(text, index)
   elapsed_time = (time.time() - start_time) 
