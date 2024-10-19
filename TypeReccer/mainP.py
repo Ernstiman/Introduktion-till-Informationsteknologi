@@ -103,7 +103,7 @@ def difficultySelection(monkey_skill):
 def inputError():
   os.system('cls')
   splash()
-  print(f"{BG_WHITE}{black}!! ERROR: ENTER VALID INPUT !!{reset}")
+  print(f"{BG_YELLOW}{black}!! ERROR: ENTER VALID INPUT !!{reset}")
 
 def monkeyWrite(monkey,monkey_lock, monkey_text, monkey_skill):
   start_time = time.time()
@@ -119,11 +119,9 @@ def monkeyWrite(monkey,monkey_lock, monkey_text, monkey_skill):
     monkey.final_monkey_wpm = (monkey.monkey_counter / (elapsed_time / 60)) // 5
 
 def checkAmountOfMonkeys(amount):
-  try:
-    int(amount)
+  if amount > 0:
     return True
-  except:
-    print("Enter an integer.")
+  else: 
     return False
 
 def killMonkeys(monkeys):
@@ -149,7 +147,6 @@ def calculateWPM(elapsed_time, index):
   except: 
     pass 
   
-
 def underliner(text, index):
   if index < len(text):
     letter = text[index]
@@ -288,7 +285,13 @@ def leaderboard(wpm, monkeys):
 
   print("\nLeaderboard:")
   for rank, (name, wpm) in enumerate(scores, start=1):
-    print(f"{rank}. {name}:")
+    if name != "You":
+      if wpm == 0:
+        print(f"{rank}. {name}: {BG_RED}{white}DNF{reset}")
+      else:
+        print(f"{rank}. {name}: {untouched_red}{wpm}{reset} WPM ")
+    else:
+      print(f"{rank}. {name}: {green}{wpm}{reset} WPM ")
 
 # ---------------------------------------------------- GAME LOOP
 def main():
@@ -303,11 +306,18 @@ def main():
   monkey_skill = difficultySelection(monkey_skill)
 
   while True:
-    amount_of_monkeys = int(input("How many monkeys to you want to play against?? --> "))
-    if checkAmountOfMonkeys(amount_of_monkeys):
-      monkeys = [Monkey(monkey_skill, text,"Monkey " + str(monkey + 1) ) for monkey in range(amount_of_monkeys)]
-      break
-
+    
+    try:
+        amount_of_monkeys = int(input("How many monkeys do you want to play against? --> "))
+        
+        if checkAmountOfMonkeys(amount_of_monkeys):  
+          
+            monkeys = [Monkey(monkey_skill, text, "Monkey " + str(monkey + 1)) for monkey in range(amount_of_monkeys)]
+            break
+        else:
+            inputError()
+    except ValueError:
+        inputError()
   printIntroScreen(text, current_word, monkeys)
 
 
