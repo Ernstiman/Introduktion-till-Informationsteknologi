@@ -4,12 +4,33 @@ import random
 import time
 import threading
 
+# TEXT STYLES
 reset = '\033[0m'
+underline = '\033[4m' #length: 4
+bold = "\033[1m"
+
+# TEXT COLORS
+black = "\033[30m"
+yellow = "\033[33m"
+magenta = "\033[35m"
+cyan = "\033[36m"
 green = '\033[32m'
 red = '\033[31m'
-blue = '\033[94m'
-underline = '\033[4m' #length: 4
+untouched_red = '\033[31m'
+blue = "\033[34m"
+white = "\033[37m"
 
+# BACKGROUD COLORS
+BG_BLACK = "\033[40m"
+BG_RED = "\033[41m"
+BG_GREEN = "\033[42m"
+BG_YELLOW = "\033[43m"
+BG_BLUE = "\033[44m"
+BG_MAGENTA = "\033[45m"
+BG_CYAN = "\033[46m"
+BG_WHITE = "\033[47m"
+
+# ---------------------------------------------------- MONKEY CLASS
 class Monkey():
   def __init__(self, monkey_skill, monkey_text, name):
     self.monkey_skill = monkey_skill
@@ -18,10 +39,12 @@ class Monkey():
     self.monkey_lock = threading.Lock()
     self.monkey_thread = threading.Thread(target = lambda:monkeyWrite(self,self.monkey_lock, self.monkey_text, monkey_skill))
     self.name = name
+    self.final_monkey_wpm = 0
     pass
 
   def print_progress_bar(self, total,start_time, bar_length=50,):
     monkey_wpm = 0
+    
     progress = self.monkey_counter / total
     green_squares = int(progress * bar_length)
     red_squares = bar_length - green_squares
@@ -30,11 +53,16 @@ class Monkey():
     monkey_elapsed_time = (time.time() - start_time)
     if monkey_elapsed_time != 0:
       monkey_wpm = ((self.monkey_counter * 10) / (monkey_elapsed_time / 6)) // 5
-    print(self.name)
-    print(f"\r{blue} --> | {reset} {green_bar}{red_bar}{reset} |")
-    print(f"{blue}-->{reset} {monkey_wpm} WPM \n")
-    
-    pass
+      
+    if red_squares == 0:
+      print(self.name)
+      print(f"\r{blue}--> {reset} [{green_bar}{red_bar}{reset}]")
+      print(f"{blue}-->{reset} {self.final_monkey_wpm} WPM \n")
+    else:
+      print(self.name)
+      print(f"\r{blue}--> {reset} [{green_bar}{red_bar}{reset}]")
+      print(f"{blue}-->{reset} {monkey_wpm} WPM \n")
+
 
   def __str__(self):
     return (self.name)
@@ -42,9 +70,43 @@ class Monkey():
   def __del__(self):
     pass
 
+# ---------------------------------------------------- MONKEY FUNCTIONS
+def difficultySelection(monkey_skill):
+  while True:
+    try:
+      difficulty = int(input(f"{bold}Enter Game Difficulty:{reset}\n1){green} Easy{reset}\n2){blue} Medium{reset}\n3){untouched_red} Hard{reset}\n4) {BG_RED}{bold}{white}!!!MONKEY DEATH!!!{reset}\n5) Quit\nOption: "))
+      if difficulty == 1:
+        monkey_skill = random.randint(30, 40)
+        print(f"\nYou Selected{green} Easy!{reset}")
+        break
+      elif difficulty == 2:
+        monkey_skill = random.randint(20, 30)
+        print(f"\nYou Selected{blue} Medium!{reset}")
+        break
+      elif difficulty == 3:
+        monkey_skill = random.randint(5, 15)
+        print(f"\nYou Selected{untouched_red} Hard!{reset}")
+        break
+      elif difficulty == 4:
+        monkey_skill = random.randint(2, 10)
+        print(f"\n{BG_RED}{bold}{white}You Selected MONKEY DEATH!!!{reset}")
+        break
+      elif difficulty == 5:
+        os.system('cls')
+        exit()
+      else:
+        inputError()
+    except ValueError:
+      inputError()
+  return monkey_skill
 
+def inputError():
+  os.system('cls')
+  splash()
+  print(f"{BG_WHITE}{black}!! ERROR: ENTER VALID INPUT !!{reset}")
 
 def monkeyWrite(monkey,monkey_lock, monkey_text, monkey_skill):
+  start_time = time.time()
   with monkey_lock:
     while monkey.monkey_counter != len(monkey_text) + 1:
       time.sleep(0.005)
@@ -52,23 +114,23 @@ def monkeyWrite(monkey,monkey_lock, monkey_text, monkey_skill):
       if randMonkeyNum == 1:
         monkey.monkey_counter += 1
       
+  elapsed_time = time.time() - start_time
+  if elapsed_time > 0:
+    monkey.final_monkey_wpm = (monkey.monkey_counter / (elapsed_time / 60)) // 5
 
-def print_progress_bar(total,start_time,monkeys, bar_length=50, ):
+def checkAmountOfMonkeys(amount):
+  try:
+    int(amount)
+    return True
+  except:
+    print("Enter an integer.")
+    return False
+
+def killMonkeys(monkeys):
   for monkey in monkeys:
-    monkey_wpm = 0
-    progress = monkey.monkey_counter / total
-    green_squares = int(progress * bar_length)
-    red_squares = bar_length - green_squares
-    green_bar = '\033[32m' + "■" * green_squares  
-    red_bar = '\033[31m' + "■" * red_squares 
-    monkey_elapsed_time = (time.time() - start_time)
-    if monkey_elapsed_time != 0:
-      monkey_wpm = ((monkey.monkey_counter * 10) / (monkey_elapsed_time / 6)) // 5
-    print(monkey)
-    print(f"\r{blue} --> | {reset} {green_bar}{red_bar}{reset} |")
-    print(f"{blue}-->{reset} {monkey_wpm} WPM \n")
-  
+    monkey.monkey_count = len(monkey.monkey_text) + 1
 
+# ---------------------------------------------------- TEXT AND STRING FUNCTIONS
 def generateText():
   with open("texts.txt", 'r') as textFile:
     lines = textFile.readlines()
@@ -76,17 +138,17 @@ def generateText():
     text = lines[randNum].strip()  
     return text
 
-
-
 def calculateWPM(elapsed_time, index):
   try:
     if elapsed_time > 0:
       wpm = (index / (elapsed_time / 6)) // 5
       print(f"{blue}-->{reset} {wpm} WPM \n")
+      return wpm
     else:
       print(f"{blue}-->{reset} 0 WPM \n")
   except: 
     pass 
+  
 
 def underliner(text, index):
   if index < len(text):
@@ -149,29 +211,10 @@ def checkIndex(text, index):
     letter = ""
   return letter
 
-def raceAgain():
-  while True:
-    ask = input("Do you want to race again? \n r) Race Again \n q) Quit\n")
-    print(ask)
-    if ask[len(ask) - 1] == 'r':
-      return True
-    elif ask[len(ask) - 1] == 'q':
-      return False
-    else:
-      print("Enter valid input")
-
-def splash():
-    splash_length = 40
-    row_1 = "MonkeyWrite"
-    row_2 = "Can you type faster than a monkey?"
-    row_1_space = int((splash_length - len(row_1)) / 2)
-    row_2_space = int((splash_length - len(row_2)) / 2)
-    print("\n" + "~" * splash_length + "\n" + " " * row_1_space + row_1 +"\n" + " " * row_2_space + row_2 + "\n" + "~" * splash_length)
-
 def updateCurrentWord(text, index, current_word, input_letter):
     letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y","z", "å", "ä","ö", ",", "-", ":", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
     if text.count(red) > 0:
-        current_word = red + current_word
+      current_word = red + current_word
     if text.count(red) == 0 and current_word.count(red) > 0:
       current_word = current_word[(current_word.count(red) * len(red)):]
     if input_letter == "space" and text.count(red) == 0:
@@ -184,8 +227,25 @@ def updateCurrentWord(text, index, current_word, input_letter):
       else: current_word += input_letter
     return current_word
 
+
+# ---------------------------------------------------- UI FUNCTIONS
+def raceAgain():
+  while True:
+    ask = input(f"\n{bold} Do you want to race again?{reset} \n r){green} Race Again{reset} \n q){untouched_red} Quit\n{reset}")
+    print(ask)
+    if ask[len(ask) - 1] == 'r':
+      return True
+    elif ask[len(ask) - 1] == 'q':
+      os.system('cls')
+      return False
+    else:
+      inputError()
+
 def printRace(text, current_word, start_time, index, monkeys):
+  print(f"{bold}MonkeyWrite™{reset}")
+  print("--------------------------------------------------")
   print(text)
+  print("--------------------------------------------------")
   print("\nYou: ")
   print(f"{blue}-->{reset} {current_word}")
   elapsed_time = (time.time() - start_time)
@@ -193,10 +253,16 @@ def printRace(text, current_word, start_time, index, monkeys):
   for monkey in monkeys:
     monkey.print_progress_bar(len(monkey.monkey_text), start_time)
 
+def logo():
+  print(f"{bold}MonkeyWrite™{reset}")
+
 def printIntroScreen(text, current_word, monkeys):
-  splash()
-  input(f"Press{green} Enter{reset} to Start: ")
-  print("\n",text)
+  input(f"\nPress{green} Enter{reset} to Start: ")
+  os.system('cls')
+  logo()
+  print("--------------------------------------------------")
+  print(text)
+  print("--------------------------------------------------")
   print("\nYou: ")
   print(f"{blue}-->{reset} {current_word}")
   print(f"{blue}-->{reset} 0 WPM \n")
@@ -204,19 +270,27 @@ def printIntroScreen(text, current_word, monkeys):
     print(monkey.name)
     print(f"{blue}-->{reset}")
     print(f"{blue}-->{reset} 0 WPM \n")
-    
-def checkAmountOfMonkeys(amount):
-  try:
-    int(amount)
-    return True
-  except:
-    print("Ange ett heltal")
-    return False
 
-def killMonkeys(monkeys):
-  for monkey in monkeys:
-    monkey.monkey_count = len(monkey.monkey_text) + 1
+def splash():
+    splash_length = 40
+    row_1 = "MonkeyWrite™"
+    row_2 = "Can you type faster than a monkey?"
+    row_1_space = int((splash_length - len(row_1)) / 2)
+    row_2_space = int((splash_length - len(row_2)) / 2)
+    print("\n" +bold +"~" * splash_length + "\n" + " " * row_1_space + row_1 +"\n" + " " * row_2_space + row_2 + "\n" + "~" * splash_length, reset)
 
+def leaderboard(wpm, monkeys):
+  scores = [(monkey.name, monkey.final_monkey_wpm) for monkey in monkeys]
+  scores.append(("You", wpm))
+
+  scores.sort(key=lambda x: x[1], reverse = True) # [(monkey, wpm), (monkey2, wpm2)] -> [wpm, wpm2]
+
+
+  print("\nLeaderboard:")
+  for rank, (name, wpm) in enumerate(scores, start=1):
+    print(f"{rank}. {name}:")
+
+# ---------------------------------------------------- GAME LOOP
 def main():
   os.system('cls')
   counter = 0
@@ -224,14 +298,18 @@ def main():
   text = generateText()
   text, index = underliner(text, index)
   current_word = ""
+  monkey_skill = 0
+  splash()
+  monkey_skill = difficultySelection(monkey_skill)
 
   while True:
-    amount_of_monkeys = int(input("Hur många apor vill du spela emot? --> "))
+    amount_of_monkeys = int(input("How many monkeys to you want to play against?? --> "))
     if checkAmountOfMonkeys(amount_of_monkeys):
-      monkeys = [Monkey(random.randint(15,28), text,"Monkey " + str(monkey + 1) ) for monkey in range(amount_of_monkeys)]
+      monkeys = [Monkey(monkey_skill, text,"Monkey " + str(monkey + 1) ) for monkey in range(amount_of_monkeys)]
       break
 
   printIntroScreen(text, current_word, monkeys)
+
 
   while True:
     current_letter = checkIndex(text, index)
@@ -241,12 +319,14 @@ def main():
 
       input_letter = input_letter.name
 
-      if input_letter == "esc":
+      if input_letter == "0":
         killMonkeys(monkeys)
-        
         
       if counter == 0:
         start_time = time.time()
+      elapsed_time = time.time() - start_time
+      wpm = calculateWPM(elapsed_time, index)
+
 
       if input_letter != "skift" and input_letter != "right shift":
         index, text = checkLetter(index, text, input_letter, current_letter)
@@ -258,17 +338,23 @@ def main():
         os.system('cls')
         text, index = underliner(text, index)
         printRace(text, current_word, start_time, index, monkeys)
+ 
         counter += 1
         
     if index >= len(text) and text.count(red) == 0:
       for monkey in monkeys:
         if monkey.monkey_counter == len(monkey.monkey_text) + 1:
-          print("Du förlora")
+          print(BG_RED+"You're slower than a f*cking monkey."+reset)
           break
       else:
-        print("Du vann!")
+        print(BG_GREEN+"YOU WIN!"+reset)
+      
+      leaderboard(wpm, monkeys)
+
       for monkey in monkeys:
-          monkey.monkey_counter = len(monkey.monkey_text) + 1  
+          monkey.monkey_thread.join()
+
+
       if raceAgain():
         monkeys = []
         main()
@@ -276,3 +362,4 @@ def main():
 
 if __name__ == "__main__":
   main()
+  
