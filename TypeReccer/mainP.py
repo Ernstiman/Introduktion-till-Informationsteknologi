@@ -30,6 +30,7 @@ BG_MAGENTA = "\033[45m"
 BG_CYAN = "\033[46m"
 BG_WHITE = "\033[47m"
 
+kill_monkey = False
 # ---------------------------------------------------- MONKEY CLASS
 class Monkey():
   def __init__(self, monkey_skill, monkey_text, name):
@@ -106,9 +107,10 @@ def inputError():
   print(f"{BG_YELLOW}{black}!! ERROR: ENTER VALID INPUT !!{reset}")
 
 def monkeyWrite(monkey,monkey_lock, monkey_text, monkey_skill):
+
   start_time = time.time()
   with monkey_lock:
-    while monkey.monkey_counter != len(monkey_text) + 1:
+    while (monkey.monkey_counter != len(monkey_text) + 1 and not kill_monkey):
       time.sleep(0.005)
       randMonkeyNum = random.randint(1, monkey_skill)
       if randMonkeyNum == 1:
@@ -230,6 +232,7 @@ def raceAgain():
   while True:
     ask = input(f"\n{bold} Do you want to race again?{reset} \n r){green} Race Again{reset} \n q){untouched_red} Quit\n{reset}")
     print(ask)
+    ask = " " + ask
     if ask[len(ask) - 1] == 'r':
       return True
     elif ask[len(ask) - 1] == 'q':
@@ -295,6 +298,8 @@ def leaderboard(wpm, monkeys):
 
 # ---------------------------------------------------- GAME LOOP
 def main():
+  global kill_monkey
+  kill_monkey = False
   os.system('cls')
   counter = 0
   index = 0 
@@ -330,7 +335,7 @@ def main():
       input_letter = input_letter.name
 
       if input_letter == "0":
-        killMonkeys(monkeys)
+        kill_monkey = True
         
       if counter == 0:
         start_time = time.time()
@@ -361,8 +366,7 @@ def main():
       
       leaderboard(wpm, monkeys)
 
-      for monkey in monkeys:
-          monkey.monkey_thread.join()
+      kill_monkey = True
 
 
       if raceAgain():
