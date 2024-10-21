@@ -1,0 +1,285 @@
+[33mcommit a07c520b51639ce79e11043476cf1a8b64af5f40[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m
+Author: Viktor Forslund <viktor@ekastigen.net>
+Date:   Mon Oct 21 23:06:36 2024 +0200
+
+    fixade så man kan se en graf på sin data
+
+[33mcommit f497f5f7789e4122a332ec58eef8af9653e85963[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Viktor Forslund <viktor@ekastigen.net>
+Date:   Sun Oct 20 21:48:33 2024 +0200
+
+    fixade så att man kan döda aporna
+
+[33mcommit 198315f8fda2b4978ee45da072b0553127e42347[m
+Author: Philip Bohman <philip.bohman1@gmail.com>
+Date:   Sat Oct 19 16:15:37 2024 +0200
+
+    Spel klart!
+
+[33mcommit 1fc06e2e4e86291b9c6f6d1d526afd343badfede[m
+Author: phbo9797 <philip.bohman.9797@student.uu.se>
+Date:   Sat Oct 19 04:22:35 2024 +0200
+
+    Bättre UI, +leaderboard, +difficulty settings
+
+[33mcommit bebba9f0db99872dcc57ee8186576854a460bfbc[m
+Author: Viktor Forslund <viktor@ekastigen.net>
+Date:   Fri Oct 18 23:29:47 2024 +0200
+
+    programmet är lite bättre nu
+
+[33mcommit 426a4697ff42fd97cdc991e6e9acb2421039d547[m
+Merge: d7c8ed6 39cd1a0
+Author: Viktor Forslund <viktor@ekastigen.net>
+Date:   Fri Oct 18 15:34:11 2024 +0200
+
+    commit
+
+[33mcommit d7c8ed6da93077bbf629d4c930c06edbe3e127ca[m
+Merge: 2c5f8c8 7f772e1
+Author: Viktor Forslund <viktor@ekastigen.net>
+Date:   Fri Oct 18 15:31:20 2024 +0200
+
+    commit
+
+[33mcommit 39cd1a09561bee242f3dfb06e21faa935bbccaf6[m
+Author: Viktor <viktor@ekastigen.net>
+Date:   Thu Oct 17 22:27:50 2024 +0200
+
+    nu är programmet buggfritt
+
+[33mcommit 05a6f480e98d6afe2803cb6b9a79e5d5f9947846[m
+Author: Viktor <viktor@ekastigen.net>
+Date:   Thu Oct 17 21:11:51 2024 +0200
+
+    buggfixat!
+
+[33mcommit af86aa88cb8779dcf55362500f6e8a94b6e8902a[m
+Author: Viktor <viktor@ekastigen.net>
+Date:   Thu Oct 17 17:22:01 2024 +0200
+
+    nu är den buggfixad!
+
+[33mcommit 7f772e12f275895bd0643ca8df80ff9839d37a77[m
+Author: Philip Bohman <philip.bohman1@gmail.com>
+Date:   Thu Oct 17 15:14:57 2024 +0200
+
+    push efter viktor sprängde hela repot
+
+[33mcommit 2c5f8c8b978cb7f8025f221db6952dd1c68a486f[m
+Merge: 858e8ab 625b2c4
+Author: Viktor Forslund <viktor@ekastigen.net>
+Date:   Thu Oct 17 15:09:47 2024 +0200
+
+    Merge branch 'main' of https://github.com/Ernstiman/Introduktion-till-Informationsteknologi
+
+[33mcommit 858e8ab8d1234e49c6eb65305fca3eeb8b0b3ff1[m
+Merge: 2be8e93 d96ae73
+Author: Viktor Forslund <viktor@ekastigen.net>
+Date:   Thu Oct 17 15:04:11 2024 +0200
+
+    lite fixade saker
+
+[33mcommit d96ae73127497f10924d8851b90ade2917183b01[m[33m ([m[1;31morigin/viktors_branch[m[33m, [m[1;32mviktors_branch[m[33m)[m
+Author: Viktor Forslund <viktor@ekastigen.net>
+Date:   Thu Oct 17 15:02:17 2024 +0200
+
+    buggfix
+
+[33mcommit 38b0ec1644b093b1160684237d7a221f142845ce[m
+Author: Ernstiman <114359707+Ernstiman@users.noreply.github.com>
+Date:   Thu Oct 17 14:59:18 2024 +0200
+
+    Add files via upload
+
+[33mcommit 625b2c415af87711c25b6fb0742166077ee3d3a1[m
+Author: Philip Bohman <philip.bohman1@gmail.com>
+Date:   Thu Oct 17 14:54:07 2024 +0200
+
+    dags att köra merge
+
+[33mcommit 2be8e935c060f10d0e4642faf813e12f0ffeba8b[m
+Author: Philip Bohman <philip.bohman1@gmail.com>
+Date:   Thu Oct 17 13:52:50 2024 +0200
+
+    monke monke monke monke
+
+[33mcommit 4f22c138bbe85db67dec590e22d19bde5d6bfc0b[m
+Author: phbo9797 <philip.bohman.9797@student.uu.se>
+Date:   Thu Oct 17 11:19:08 2024 +0200
+
+    monke done!!!
+
+[33mcommit 07655952a95731cc5dc6c91ff38011b3e082b0e9[m
+Author: phbo9797 <philip.bohman.9797@student.uu.se>
+Date:   Wed Oct 16 21:40:55 2024 +0200
+
+    buggfri typeracer
+
+[33mcommit e52e9ea326a861ded96e1ab7bb13aae68921a8d5[m
+Author: Viktor <viktor@ekastigen.net>
+Date:   Wed Oct 16 20:17:41 2024 +0200
+
+    skapade ett folder
+
+[33mcommit 27d3b8ab4f7158f05387dc6b020826c3568656c8[m
+Author: Viktor Forslund <viktor@ekastigen.net>
+Date:   Wed Oct 16 20:15:43 2024 +0200
+
+    strog wars
+
+[33mcommit 80f107675d81e6bcbc06249700ea449e0f5eafb0[m
+Author: Viktor <viktor@ekastigen.net>
+Date:   Wed Oct 16 12:39:26 2024 +0200
+
+    skapade en testfil för pygame
+
+[33mcommit b4f91b23df7a2a769c0183aa8dc3db500546839f[m
+Author: Viktor <viktor@ekastigen.net>
+Date:   Tue Oct 15 13:22:44 2024 +0200
+
+    fixade en liten bugg
+
+[33mcommit 5362ed05223b25e9ab434e4d32865b8b71c8181a[m
+Author: Viktor <viktor@ekastigen.net>
+Date:   Tue Oct 15 13:02:38 2024 +0200
+
+    nu är prototypen klar
+
+[33mcommit 366cbee5d9d3ce14f8c06e1f1cefe98e5d614473[m
+Author: Viktor <viktor@ekastigen.net>
+Date:   Tue Oct 15 12:48:13 2024 +0200
+
+    tillbaka till vanligt
+
+[33mcommit 45a20c6c223e6460e3535474bf1d18b1ee860c1f[m
+Author: Viktor <viktor@ekastigen.net>
+Date:   Tue Oct 15 12:45:28 2024 +0200
+
+    ja
+
+[33mcommit 9fc314f08705d14f426e3643151ec62b1cabddfb[m
+Author: Viktor <viktor@ekastigen.net>
+Date:   Tue Oct 15 12:41:34 2024 +0200
+
+    ännu roligare ändringar har gjorts!
+
+[33mcommit 4a83c6a4d68230cfdceb4a380e0aa38f81cb4afd[m
+Author: Viktor <viktor@ekastigen.net>
+Date:   Tue Oct 15 12:39:45 2024 +0200
+
+    gjort lite roliga ändringar
+
+[33mcommit d9c46daf9b79ead1add4a6a868d13affe7261b02[m
+Author: Viktor <viktor@ekastigen.net>
+Date:   Tue Oct 15 12:17:56 2024 +0200
+
+    ord display
+
+[33mcommit 9b8c8fc011f37b854b48bad5ba9efa3016957c17[m
+Merge: fc3d685 cce9b68
+Author: Viktor <viktor@ekastigen.net>
+Date:   Tue Oct 15 11:39:32 2024 +0200
+
+    Merge branch 'main' of https://github.com/Ernstiman/Introduktion-till-Informationsteknologi
+
+[33mcommit fc3d685808f485e664db503c2a4bc1cca61dee95[m
+Author: Viktor <viktor@ekastigen.net>
+Date:   Tue Oct 15 11:39:29 2024 +0200
+
+    liten rolig ändring
+
+[33mcommit cce9b683c60e99d6e2ae143a9c1a78fc4b89a7e8[m
+Merge: 0b5d54d 6959de0
+Author: Philip Bohman <philip.bohman1@gmail.com>
+Date:   Mon Oct 14 22:51:01 2024 +0200
+
+    ska pulla nya versionen
+
+[33mcommit 6959de085575149cb5735e4fcdbc221589d21771[m
+Author: Viktor <viktor@ekastigen.net>
+Date:   Mon Oct 14 21:15:10 2024 +0200
+
+    prototyp klar!
+
+[33mcommit 484645d753f4140e43460cffc84252118998f7c1[m
+Author: Viktor <viktor@ekastigen.net>
+Date:   Mon Oct 14 20:20:11 2024 +0200
+
+    prototyp klar
+
+[33mcommit 6b8f97bdfcbaf268a6dbd16f069c3e5b6b3ecaa8[m
+Author: Viktor <viktor@ekastigen.net>
+Date:   Mon Oct 14 19:59:38 2024 +0200
+
+    Viktor_test funkar
+
+[33mcommit 0b5d54dd65cb4d12a3b31089859e78766dc68927[m
+Author: Philip Bohman <philip.bohman1@gmail.com>
+Date:   Mon Oct 14 19:23:39 2024 +0200
+
+    prototyp v1
+
+[33mcommit a499ee4e0b56ad5c7a88bd3ade380c09f6ac15dd[m
+Merge: 3237ab8 9f90f34
+Author: Viktor Forslund <viktor@ekastigen.net>
+Date:   Mon Oct 14 17:58:39 2024 +0200
+
+    Merge branch 'main' of https://github.com/Ernstiman/Introduktion-till-Informationsteknologi
+
+[33mcommit 3237ab83d0f25b12561e943a1b489ddc92eacafc[m
+Author: Viktor Forslund <viktor@ekastigen.net>
+Date:   Mon Oct 14 17:58:24 2024 +0200
+
+    snart klart
+
+[33mcommit 9f90f348b258b752a4771b0a962cfdafcf19c53e[m
+Author: Philip Bohman <philip.bohman1@gmail.com>
+Date:   Mon Oct 14 16:57:32 2024 +0200
+
+    prototyp v1
+
+[33mcommit ab070ff7311b224035e3272fc016d5ea0c6e42e8[m
+Author: Philip Bohman <philip.bohman1@gmail.com>
+Date:   Mon Oct 14 16:35:55 2024 +0200
+
+    textfilen
+
+[33mcommit 85ee07004447ebea9e5650c706826c33e548e5f4[m
+Author: Philip Bohman <philip.bohman1@gmail.com>
+Date:   Mon Oct 14 16:35:11 2024 +0200
+
+    Philips version
+
+[33mcommit dae988f63be200eb6547dc1fe3af28955b47f694[m
+Author: Viktor <viktor@ekastigen.net>
+Date:   Mon Oct 14 14:59:07 2024 +0200
+
+    lite framsteg
+
+[33mcommit e95cc7bd1a6425c6d0640b9eb3931b96c4ffa64f[m
+Author: Viktor <viktor@ekastigen.net>
+Date:   Mon Oct 14 14:49:15 2024 +0200
+
+    test
+
+[33mcommit 82496f92ff2dcaf890eda79d28cac11e5f8be788[m
+Author: Philip Bohman <philip.bohman1@gmail.com>
+Date:   Mon Oct 14 12:03:59 2024 +0200
+
+    Lagt till player.py
+
+[33mcommit a8072e8909d70e94567bda9c450b944b51941e36[m
+Merge: f06fc03 68b42d4
+Author: Philip Bohman <philip.bohman1@gmail.com>
+Date:   Mon Oct 14 12:01:47 2024 +0200
+
+    Typereccer
+
+[33mcommit 68b42d4eac935688010af338cb1ad029d90e3981[m
+Author: Viktor <viktor@ekastigen.net>
+Date:   Sat Oct 12 16:20:12 2024 +0200
+
+    Lagra är klart!
+
+[33m
