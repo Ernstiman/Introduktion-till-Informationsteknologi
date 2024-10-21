@@ -3,6 +3,7 @@ import os
 import random
 import time
 import threading
+import matplotlib.pyplot as plt
 
 # TEXT STYLES
 reset = '\033[0m'
@@ -42,6 +43,7 @@ class Monkey():
     self.name = name
     self.final_monkey_wpm = 0
     pass
+
 
   def print_progress_bar(self, total,start_time, bar_length=50,):
     monkey_wpm = 0
@@ -138,15 +140,44 @@ def generateText():
     text = lines[randNum].strip()  
     return text
 
-def calculateWPM(elapsed_time, index):
+def print_graph(wpms):
+  wpms.pop(0)
+  wpms.pop(0)
+  avrg_amount = len(wpms) // 8
+  start_index = 0
+  count = 0
+  avr_list = []
+  for x in range(8):
+    count = 0
+    sum = 0
+    for x in range(start_index, start_index + avrg_amount):
+      count += 1
+      sum += wpms[x]
+    avr = int(sum/count)
+    avr_list.append(avr)
+    start_index += avrg_amount
+    
+  x_axis = [x + 1 for x in range(8)]
+  plt.bar(x_axis, avr_list)
+  plt.ylim([0, max(avr_list) + 20])
+  plt.xlabel("Segment")
+  plt.ylabel("WPM")
+  plt.show()
+
+
+  pass
+def calculateWPM(elapsed_time, index, wpms):
   try:
     if elapsed_time > 0:
-      wpm = (index / (elapsed_time / 6)) // 5
+      wpm = int((index / (elapsed_time / 60)) / 5)
+      wpms.append(wpm)
       print(f"{blue}-->{reset} {wpm} WPM \n")
-      return wpm
+      return wpm, wpms
     else:
       print(f"{blue}-->{reset} 0 WPM \n")
+      return 0, wpms
   except: 
+    return wpm, wpms
     pass 
   
 def underliner(text, index):
@@ -228,20 +259,23 @@ def updateCurrentWord(text, index, current_word, input_letter):
 
 
 # ---------------------------------------------------- UI FUNCTIONS
-def raceAgain():
+def raceAgain(wpms):
   while True:
-    ask = input(f"\n{bold} Do you want to race again?{reset} \n r){green} Race Again{reset} \n q){untouched_red} Quit\n{reset}")
+    ask = input(f"\n{bold} Do you want to race again or see race data?{reset} \n r){green} Race Again{reset} \n s){yellow} See race data{reset}\n q){untouched_red} Quit\n{reset}")
     print(ask)
     ask = " " + ask
     if ask[len(ask) - 1] == 'r':
       return True
+    elif ask[len(ask) - 1] == 's':
+      os.system('cls')
+      print_graph(wpms)
     elif ask[len(ask) - 1] == 'q':
       os.system('cls')
       return False
     else:
       inputError()
 
-def printRace(text, current_word, start_time, index, monkeys):
+def printRace(text, current_word, start_time, index, monkeys, wpms):
   print(f"{bold}MonkeyWrite™{reset}")
   print("--------------------------------------------------")
   print(text)
@@ -249,7 +283,7 @@ def printRace(text, current_word, start_time, index, monkeys):
   print("\nYou: ")
   print(f"{blue}-->{reset} {current_word}")
   elapsed_time = (time.time() - start_time)
-  calculateWPM(elapsed_time, index) 
+  calculateWPM(elapsed_time, index, wpms) 
   for monkey in monkeys:
     monkey.print_progress_bar(len(monkey.monkey_text), start_time)
 
@@ -309,6 +343,8 @@ def main():
   monkey_skill = 0
   splash()
   monkey_skill = difficultySelection(monkey_skill)
+  wpms = []
+  wpm_index = 0
 
   while True:
     
@@ -340,10 +376,11 @@ def main():
       if counter == 0:
         start_time = time.time()
       elapsed_time = time.time() - start_time
-      wpm = calculateWPM(elapsed_time, index)
+      wpm, wpms = calculateWPM(elapsed_time, wpm_index, wpms)
 
 
       if input_letter != "skift" and input_letter != "right shift":
+        wpm_index += 1
         index, text = checkLetter(index, text, input_letter, current_letter)
         current_word = updateCurrentWord(text, index, current_word, input_letter)
 
@@ -352,7 +389,7 @@ def main():
 
         os.system('cls')
         text, index = underliner(text, index)
-        printRace(text, current_word, start_time, index, monkeys)
+        printRace(text, current_word, start_time, wpm_index, monkeys, wpms)
  
         counter += 1
         
@@ -365,11 +402,10 @@ def main():
         print(BG_GREEN+"YOU WIN!"+reset)
       
       leaderboard(wpm, monkeys)
-
       kill_monkey = True
 
 
-      if raceAgain():
+      if raceAgain(wpms):
         monkeys = []
         main()
       break
