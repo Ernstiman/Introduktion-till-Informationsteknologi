@@ -35,14 +35,21 @@ kill_monkey = False
 # ---------------------------------------------------- MONKEY CLASS
 class Monkey():
   def __init__(self, monkey_skill, monkey_text, name):
+
+    def monkeyNames(name):
+      with open('monkey_names.txt', 'r', encoding = 'utf-8') as nameFile:
+        lines = nameFile.readlines()
+        randNum = random.randint(0, len(lines) - 1)
+        name = lines[randNum].strip()  
+        return name
+
     self.monkey_skill = monkey_skill
     self.monkey_counter = 0
     self.monkey_text = monkey_text
     self.monkey_lock = threading.Lock()
     self.monkey_thread = threading.Thread(target = lambda:monkeyWrite(self,self.monkey_lock, self.monkey_text, monkey_skill))
-    self.name = name
+    self.name = monkeyNames(name)
     self.final_monkey_wpm = 0
-    pass
 
 
   def print_progress_bar(self, total,start_time, bar_length=50,):
@@ -74,6 +81,8 @@ class Monkey():
     pass
 
 # ---------------------------------------------------- MONKEY FUNCTIONS
+
+
 def difficultySelection(monkey_skill):
   while True:
     try:
@@ -134,9 +143,9 @@ def killMonkeys(monkeys):
 
 # ---------------------------------------------------- TEXT AND STRING FUNCTIONS
 def generateText():
-  with open("texts.txt", 'r') as textFile:
+  with open("texts.txt", 'r', encoding='utf-8') as textFile:
     lines = textFile.readlines()
-    randNum = random.randint(0, 0)
+    randNum = random.randint(0, len(lines)-1)
     text = lines[randNum].strip()  
     return text
 
@@ -350,11 +359,15 @@ def main():
     
     try:
         amount_of_monkeys = int(input("How many monkeys do you want to play against? --> "))
-        
         if checkAmountOfMonkeys(amount_of_monkeys):  
-          
-            monkeys = [Monkey(monkey_skill, text, "Monkey " + str(monkey + 1)) for monkey in range(amount_of_monkeys)]
-            break
+          if amount_of_monkeys >= 10:
+            monkey_overload = input(f"{BG_YELLOW}{white}!!WARNING!!{reset}\nToo many monkeys may cause your PC to explode. Are you sure you want to proceed?\n(Please note that we are not responsible for the destruction of your computer)\ny){green} Yes{reset}\nn){untouched_red} No{reset}\nOption: ")
+            if monkey_overload.lower() == 'y':
+              pass
+            else:
+              continue
+          monkeys = [Monkey(monkey_skill, text, "Monkey " + str(monkey + 1)) for monkey in range(amount_of_monkeys)]
+          break
         else:
             inputError()
     except ValueError:
