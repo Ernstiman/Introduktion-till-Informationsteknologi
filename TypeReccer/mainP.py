@@ -1,3 +1,4 @@
+
 import keyboard
 import os
 import random
@@ -16,7 +17,7 @@ yellow = "\033[33m"
 magenta = "\033[35m"
 cyan = "\033[36m"
 green = '\033[32m'
-red = '\033[31m'
+red = "\033[41m" #'\033[31m'
 untouched_red = '\033[31m'
 blue = "\033[34m"
 white = "\033[37m"
@@ -47,10 +48,9 @@ class Monkey():
     self.monkey_counter = 0
     self.monkey_text = monkey_text
     self.monkey_lock = threading.Lock() # Ger varje apa en egen tråd
-    self.monkey_thread = threading.Thread(target = lambda:monkeyWrite(self,self.monkey_lock, self.monkey_text, monkey_skill))
+    self.monkey_thread = threading.Thread(target = lambda:monkeyWrite(self, self.monkey_lock, self.monkey_text, monkey_skill))
     self.name = monkeyNames(name)
     self.final_monkey_wpm = 0
-
 
   def print_progress_bar(self, total,start_time, bar_length=50,):
     monkey_wpm = 0
@@ -65,7 +65,6 @@ class Monkey():
     if monkey_elapsed_time != 0:
       monkey_wpm = ((self.monkey_counter * 10) / (monkey_elapsed_time / 6)) // 5
       
-
     if red_squares == 0:
       green_bar = cyan + "■" * green_squares
       print(self.name)
@@ -77,7 +76,6 @@ class Monkey():
       print(f"\r{blue}--> {reset} [{green_bar}{red_bar}{reset}]")
       print(f"{blue}-->{reset} {monkey_wpm} WPM \n")
 
-
   def __str__(self):
     return (self.name)
   
@@ -85,7 +83,6 @@ class Monkey():
     pass
 
 # ---------------------------------------------------- MONKEY FUNCTIONS
-
 def difficultySelection(monkey_skill):
   while True:
     try: # Varje svårighetsgrad skapas av ett visst intervall
@@ -123,7 +120,6 @@ def difficultySelection(monkey_skill):
   return monkey_skill
 
 def monkeyWrite(monkey,monkey_lock, monkey_text, monkey_skill):
-
   start_time = time.time()
   with monkey_lock:
     while (monkey.monkey_counter != len(monkey_text) + 1 and not kill_monkey):
@@ -157,7 +153,7 @@ def generateText():
     return text
 
 def print_graph(wpms):
-  wpms.pop(0) # [12341234, 23423, 82, 85, 89, 88, 86]
+  wpms.pop(0) # exempel: [12341234, 23423, 82, 85, 89, 88, 86]
   wpms.pop(0) # Tar bort första indexen för att de är för stora och kommer förstöra statistiken
   avrg_amount = len(wpms) // 8 # Ritar stapeldiagram med 8 staplar som visar perforamnce under racet.
   start_index = 0
@@ -175,7 +171,6 @@ def print_graph(wpms):
     avr = int(sum/count) 
     avr_list.append(avr)
     start_index += avrg_amount
-    
   
   x_axis = [x + 1 for x in range(8)]
   plt.bar(x_axis, avr_list) # Ritar grafen
@@ -189,10 +184,10 @@ def calculateWPM(elapsed_time, index, wpms):
     if elapsed_time > 0:
       wpm = int((index / (elapsed_time / 60)) / 5) # Räknar ut WPM utifrån tid i minuter
       wpms.append(wpm)
-      print(f"{blue}-->{reset} {wpm} WPM \n")
+      print(f"{reset}{blue}-->{reset} {wpm} WPM \n")
       return wpm, wpms
     else:
-      print(f"{blue}-->{reset} 0 WPM \n")
+      print(f"{reset}{blue}-->{reset} 0 WPM \n")
       return 0, wpms
   except: 
     return wpm, wpms
@@ -281,13 +276,11 @@ def updateCurrentWord(text, index, current_word, input_letter):
       else: current_word += input_letter
     return current_word
 
-
 # ---------------------------------------------------- UI FUNCTIONS
 def inputError(): # printar ERROR message
   os.system('cls')
   splash()
   print(f"{BG_YELLOW}{black}!! ERROR: ENTER VALID INPUT !!{reset}")
-
 
 def raceAgain(wpms):
   while True:
@@ -323,13 +316,11 @@ def printIntroScreen(text, current_word, monkeys):
   print("\nYou: ")
   print(f"{blue}-->{reset} {current_word}")
   print(f"{blue}-->{reset} 0 WPM \n")
- 
- 
+  
   for monkey in monkeys:
     print(monkey.name)
     print(f"{blue}-->{reset}")
     print(f"{blue}-->{reset} 0 WPM \n")
-
 
 def printRace(text, current_word, start_time, index, monkeys, wpms):
   print(f"{bold}MonkeyWrite™{reset}")
@@ -420,11 +411,13 @@ def main():
       if counter == 0:
         start_time = time.time()
       elapsed_time = time.time() - start_time
-      wpm, wpms = calculateWPM(elapsed_time, wpm_index, wpms)
+      
 
 
       if input_letter != "skift" and input_letter != "right shift":
-        wpm_index += 1
+        wpm, wpms = calculateWPM(elapsed_time, wpm_index, wpms)
+        if not text.count(red) > 0:
+          wpm_index += 1
         index, text = checkLetter(index, text, input_letter, current_letter)
         current_word = updateCurrentWord(text, index, current_word, input_letter)
 
@@ -440,14 +433,13 @@ def main():
     if index >= len(text) and text.count(red) == 0:
       for monkey in monkeys:
         if monkey.monkey_counter == len(monkey.monkey_text) + 1:
-          print(BG_RED+"You're slower than a f*cking monkey."+reset)
+          print(BG_RED+"YOU LOST!"+reset)     
           break
       else:
         print(BG_GREEN+"YOU WIN!"+reset)
       
       leaderboard(wpm, monkeys)
       kill_monkey = True
-
 
       if raceAgain(wpms):
         monkeys = []
@@ -456,4 +448,3 @@ def main():
 
 if __name__ == "__main__":
   main()
-  
